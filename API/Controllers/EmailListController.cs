@@ -5,9 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class EmailListController(DataContext context) : ControllerBase
+    public class EmailListController(DataContext context) : BaseApiController
     {
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EmailList>>> GetEmailList()
