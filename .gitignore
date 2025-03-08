@@ -1,2 +1,4 @@
 /API/bin
 /API/obj
+/API/node_modules
+/client/node_modules
