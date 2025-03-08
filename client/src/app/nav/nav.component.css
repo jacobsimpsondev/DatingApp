@@ -1,0 +1,27 @@
+.nav-wrapper {
+    background-color: purple;
+    padding: 25px 10px;
+}
+
+.nav-wrapper .nav-internal {
+    display: flex;
+    column-gap: 10px;
+    max-width: 1140px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.nav-wrapper .nav-internal a {
+    color: white;
+    font-weight: 600;
+    font-size: 22px;
+    text-decoration: none;
+    transition: font-size 1s, padding 1s;
+}
+
+.nav-wrapper .nav-internal a:hover {
+    font-size: 24px;
+    border: 1px solid yellow;
+    padding: 5px;
+    border-radius: 10px;
+}
