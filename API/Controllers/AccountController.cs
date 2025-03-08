@@ -3,16 +3,17 @@ using System.Text;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    public class AccountController(DataContext context) : BaseApiController
+    public class AccountController(DataContext context, ITokenService tokenService) : BaseApiController
     {
         [HttpPost("register")]
-        public async Task<ActionResult<AppUser>> Register(RegisterDto registerDto)
+        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
             if (await UserExists(registerDto.Username)) return BadRequest("Username is already taken");
 
@@ -28,11 +29,15 @@ namespace API.Controllers
             context.Users.Add(user);
             await context.SaveChangesAsync();
 
-            return user;
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = tokenService.CreateToken(user)
+            };
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<AppUser>> Login(LoginDto loginDto)
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await context.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
 
@@ -47,7 +52,11 @@ namespace API.Controllers
                 if (computeHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid Password");
             }
 
-            return user;
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = tokenService.CreateToken(user)
+            };
         }
 
         private async Task<bool> UserExists(string username)
