@@ -1,0 +1,9 @@
+.button-holder {
+    display: flex;
+    column-gap: 15px;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 10px;
+    max-width: 1140px;
+    margin: 0 auto;
+}

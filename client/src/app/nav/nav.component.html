@@ -1,8 +1,13 @@
 <div class="nav-wrapper">
     <div class="nav-internal">
-        <a href="">Matches</a>
-        <a href="">Lists</a>
-        <a href="">Messages</a>
+        @if (accountService.currentUser()) {
+            <a href="">Matches</a>
+            <a href="">Lists</a>
+            <a href="">Messages</a>
+        }
+        @if (!accountService.currentUser()) {
+            <p>Login to see the Menu</p>
+        }
         <form #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off">
             <input name="username" [(ngModel)]="model.username" type="text" placeholder="Username">
             <input name="password" [(ngModel)]="model.password" type="password" placeholder="Password">
